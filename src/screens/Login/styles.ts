@@ -5,11 +5,19 @@ import Input from '../../components/Input';
 export const Container = styled.View`
   flex: 1;
   background-color: #191720;
-  padding: 0 32px 0 32px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  .input:-webkit-autofill {
+    border: 1px solid #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    box-shadow: 0 0 0px 1000px #000 inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+  }
 `;
 
 export const TitleView = styled.View`

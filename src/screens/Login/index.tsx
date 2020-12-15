@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { KeyboardAvoidingView, Platform, Image, ActivityIndicator } from 'react-native';
 import { Button } from "react-native-elements";
 import { useNavigation } from '@react-navigation/native';
 
 import { Container, TitleView, TitleImage, TitleText, LoginView, UserInput, PasswordInput, BottomView, ForgotPasswordText ,LoginButton } from './styles';
 
 import LoginSvg from '../../assets/svgs/LoginSvg';
+import { useAuth } from '../../hooks/auth';
 
 interface UserLoginProps {
   name: string;
@@ -19,6 +20,8 @@ interface ErrorsProps {
 
 
 const Login: React.FC = () => {
+  const { signIn, loading } = useAuth();
+
   const [userInfo, setUserInfo] = useState<UserLoginProps>({
     name: '',
     password: '',
@@ -52,8 +55,12 @@ const Login: React.FC = () => {
     }
 
     if (!nameWithError && !passwordWithError) {
-     
+      const user = {
+        login: 'Christian',
+        password: '123',
+      }
 
+      signIn(user);
     } else {
      
     }
@@ -66,22 +73,30 @@ const Login: React.FC = () => {
     <>
       <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          // behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          behavior='padding'
           enabled
         >
         <Container> 
-          <TitleView>
-            <LoginSvg/>
-            <TitleText>Acesse sua Conta</TitleText>
-          </TitleView>
-          <LoginView>
-            <UserInput placeholder="User" name="user" leftIcon="user" error={errors.nameError ? "Preencha o usuario corretamente!" : ''} onChange={handleChange('name')}></UserInput>
-            <PasswordInput placeholder="Password" name="password" leftIcon="lock" error={errors.passwordError ? "Preencha a senha corretamente!" : ''} onChange={handleChange('password')}></PasswordInput>
-          </LoginView>
-          <BottomView>
-            <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
-            <LoginButton iconName="send" onPress={handleSubmit}> Login </LoginButton>
-          </BottomView>
+          {loading ? (
+            <ActivityIndicator size="large" color="#77c16c" />
+            ) : (
+            <>
+              <TitleView>
+                <LoginSvg/>
+                <TitleText>Acesse sua Conta</TitleText>
+              </TitleView>
+              <LoginView>
+                <UserInput placeholder="User" name="user" leftIcon="user" error={errors.nameError ? "Preencha o usuario corretamente!" : ''} onChange={handleChange('name')}></UserInput>
+                <PasswordInput autoCompleteType="off" secureTextEntry={true} placeholder="Password" name="password" leftIcon="lock" error={errors.passwordError ? "Preencha a senha corretamente!" : ''} onChange={handleChange('password')}></PasswordInput>
+              </LoginView>
+              <BottomView>
+                <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
+                <LoginButton iconName="send" onPress={handleSubmit}> Login </LoginButton>
+              </BottomView>
+            </>
+            )
+           }
         </Container>
       </KeyboardAvoidingView>
     </>

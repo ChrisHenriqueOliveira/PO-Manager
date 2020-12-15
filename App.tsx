@@ -8,6 +8,7 @@ import { AppLoading } from 'expo';
 import useCachedResources from './src/hooks/useCachedResources';
 import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
+import AppProvider from './src/hooks';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -41,8 +42,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <AppProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </AppProvider>
       </SafeAreaProvider>
     );
   }

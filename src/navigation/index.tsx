@@ -9,6 +9,7 @@ import NotFoundScreen from '../screens/NotFound';
 import { RootStackParamList } from './navigationTypes';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import { useAuth } from '../hooks/auth';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -23,6 +24,8 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const RootStack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const { user } = useAuth();
+
   return (
     <RootStack.Navigator screenOptions=
     {
@@ -33,7 +36,7 @@ function RootNavigator() {
         cardStyle: { backgroundColor: '#312e38' },
       }
     }>
-      {1 + 1 === 3 ? (
+      {user !== undefined ? (
         <RootStack.Screen name="Root" component={BottomTabNavigator} />
       ) : (
         <RootStack.Screen name="Login" component={LoginScreen} />
