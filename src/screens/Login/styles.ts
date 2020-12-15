@@ -5,7 +5,7 @@ import Input from '../../components/Input';
 export const Container = styled.View`
   flex: 1;
   background-color: #191720;
-  padding: 24px;
+  padding: 0 16px 16px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;

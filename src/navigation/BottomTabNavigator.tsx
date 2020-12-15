@@ -19,7 +19,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="User"
+      initialRouteName="Dashboard"
       tabBarOptions={{
         inactiveBackgroundColor: "#36353E", 
         activeBackgroundColor: "#36353E", 

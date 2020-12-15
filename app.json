@@ -7,6 +7,7 @@
       "android",
       "web"
     ],
+    "backgroundColor": "#000000",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
@@ -15,7 +16,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#191720"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
