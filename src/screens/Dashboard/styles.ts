@@ -9,18 +9,22 @@ interface TypeCardProps {
 export const Container = styled.View`
   flex: 1;
   background-color: #191720;
-  padding: 0 16px 16px 16px;
+  padding: 0 16px 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 `;
 
-export const SafeAreaView = styled.ScrollView`
-  width: 100%;
-`;
+// export const ScrollView = styled.ScrollView`
+//   width: 100%;
+// `;
 
-export const ScrollView = styled.ScrollView`
+export const ScrollView = styled.ScrollView.attrs({
+  contentContainerStyle: { },
+  horizontal: false,
+  showsHorizontalScrollIndicator: false,
+})`
   width: 100%;
 `;
 
@@ -115,16 +119,19 @@ export const FiltersTypeViews = styled.View`
 `;
 
 export const FiltersTypeView = styled.ScrollView.attrs({
-  contentContainerStyle: { paddingLeft: 8, marginRight: 16 },
+  contentContainerStyle: { paddingLeft: 8 },
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-})``;
+})`
+  width: 98%;
+`;
 
 export const FiltersTypeCard = styled.Text<TypeCardProps>`
   padding: 8px;
   background-color: #36353E;
   border-radius: 8px;
-  margin-right: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
   font-family: 'Montserrat-Medium';
   font-size: 14px;
   color: #eee;

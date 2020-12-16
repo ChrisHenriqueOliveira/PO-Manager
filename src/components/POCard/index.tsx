@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { RectButtonProperties } from 'react-native-gesture-handler';
+import { CheckBox } from "react-native-elements";
 
 import { Container, HeaderView, StatusFlag, DocumentNumber, ItemView, ItemIcon, ItemText } from './styles';
 
@@ -50,6 +51,19 @@ const POCard: React.FC<POCardProps> = ({ item }) => {
   return(
   <Container>
     <HeaderView>
+      {item.status === 'Pending' && (
+        <CheckBox
+          checkedIcon="check-square"
+          uncheckedIcon="square"
+          containerStyle={{ marginLeft: 0, marginTop: 0, marginBottom: 0, marginRight: 16, padding: 0 }}
+          checkedColor="#77c16c"
+          uncheckedColor="#191720"
+          onPress={() => console.log("onPress()")}
+          size={30}
+          checked={true}
+        />
+      )}
+      
       <StatusFlag color={handleStatusColor(item.status)}/>
       <DocumentNumber color={handleStatusColor(item.status)}>{item.number}</DocumentNumber>
     </HeaderView>

@@ -6,14 +6,14 @@ interface StatusProps {
   color: string;
 }
 
-export const Container = styled(RectButton)`
+export const Container = styled.View`
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 128px;
     padding: 12px;
     background-color: #36353E;
-    border-radius: 16px;
+    border-radius: 6px;
     margin-bottom: 8px;
     justify-content: space-between;
 `;
@@ -28,7 +28,7 @@ export const StatusFlag = styled.View<StatusProps>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 16px;
   background-color: white;
 
   ${props =>

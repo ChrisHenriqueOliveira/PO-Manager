@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Alert, Text } from 'react-native';
+import { KeyboardAvoidingView, Platform, Alert, Text, FlatList } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { Container, ScrollView, SafeAreaView, HeaderView, HeaderTitle, HeaderImage, WelcomeView, WelcomeTitle, 
+import SkeletonContent from 'react-native-skeleton-content';
+
+import { Container, ScrollView, HeaderView, HeaderTitle, HeaderImage, WelcomeView, WelcomeTitle, 
   WelcomeSubtitle, BodyView, TitleView, TitleText, SubtitleText, SubtitleShowing, FiltersView, SearchBar, FiltersTypeView, 
   FiltersTypeCard, POsView } from './styles';
 
@@ -21,19 +23,19 @@ const typeFilters: string[] = [
 const POs = [
   {
     status: 'Approved',
-    number: '999999',
+    number: '111111',
     supplier: 'Alguma Loja Ai',
     date: '12/12/12',
     price: 'R$1500,00'
   },{
     status: 'Pending',
-    number: '999999',
+    number: '222222',
     supplier: 'Alguma Loja Ai',
     date: '12/12/12',
     price: 'R$1500,00'
   },{
     status: 'Blocked',
-    number: '999999',
+    number: '333333',
     supplier: 'Alguma Loja Ai',
     date: '12/12/12',
     price: 'R$1500,00'
@@ -49,8 +51,10 @@ const POs = [
 const Dashboard: React.FC = () => {
   const { user, signOut } = useAuth();
   
-  const [searchFilter, setSearchFilter] = React.useState('');
-  const [typeFilter, setTypeFilter] = React.useState('All');
+  const [searchFilter, setSearchFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('All');
+
+  const [isLoadingPOs, setIsLoadingPOs] = useState(false);
 
   const handleSubtitleColor = useCallback(() => {
     let color = '';
@@ -82,11 +86,17 @@ const Dashboard: React.FC = () => {
     return color;
   },[typeFilter])
 
+  useEffect(() => {
+    setIsLoadingPOs(true);
+
+    setTimeout(() => {
+    setIsLoadingPOs(false);
+    }, 0)
+  }, [])
+
   return (
     <Container> 
-      <SafeAreaView>
-        <ScrollView
-          >
+        <ScrollView>
           <HeaderView>
             <HeaderTitle>Dashboard</HeaderTitle>
             <HeaderImage source={userImage} />
@@ -122,14 +132,30 @@ const Dashboard: React.FC = () => {
               ))}
             </FiltersTypeView>
             </FiltersView>
-            <POsView>
-              {POs.map((item) => (
+            <POsView>     
+            <SkeletonContent
+              containerStyle={{ flex: 1, width: '100%', borderRadius: 8 }}
+              isLoading={isLoadingPOs}
+              layout={[
+                { key: '1', width: '100%', height: 128, marginBottom: 8 },
+                { key: '2', width: '100%', height: 128, marginBottom: 8 },
+                { key: '3', width: '100%', height: 128, marginBottom: 8 }
+              ]}
+            >
+              <FlatList
+              data={POs}
+              renderItem={({ item }) => (
                 <POCard item={item} />
-              ))}
+              )}
+              keyExtractor={item => item.id}
+              />
+              {/* {POs.map((item) => (
+                <POCard item={item} />
+              ))} */}
+            </SkeletonContent>     
             </POsView>
           </BodyView>
         </ScrollView>
-    </SafeAreaView>
     </Container>
   );
 };
