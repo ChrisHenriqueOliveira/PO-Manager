@@ -150,14 +150,27 @@ export const FiltersTypeCard = styled.Text<TypeCardProps>`
   `}
 `;
 
-export const ApproveAllButton = styled(Button)`
+export const RejectAllButton = styled(Button)`
   margin: 0 0 11px 0;
   border-radius: 8px;
+  width: 50%;
+  background-color: #c53030;
+`;
+
+export const ApproveAllButton = styled(Button)`
+  flex: 1;
+  margin: 0 0 11px 0;
+  border-radius: 8px;
+  margin-left: 8px;
 `;
 
 export const POsView = styled.View`
-  /* flex: 1; */
   width: 100%;
   margin-top: 11px;
   padding: 0 8px 0 8px;
+`;
+
+export const POButtonsView = styled.View`
+  display: flex;
+  flex-direction: row;
 `;

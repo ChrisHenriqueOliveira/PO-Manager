@@ -6,7 +6,7 @@ import SkeletonContent from 'react-native-skeleton-content';
 
 import { Container, ScrollView, HeaderView, HeaderTitle, HeaderAvatarButton, HeaderImage, WelcomeView, WelcomeTitle, 
   WelcomeSubtitle, BodyView, TitleView, TitleText, SubtitleText, SubtitleShowing, FiltersView, SearchBar, FiltersTypeView, 
-  FiltersTypeCard,POsView, ApproveAllButton } from './styles';
+  FiltersTypeCard,POsView, POButtonsView, ApproveAllButton, RejectAllButton } from './styles';
 
 import Button from '../../components/Button';
 import POCard from '../../components/POCard';
@@ -193,10 +193,10 @@ const Dashboard: React.FC = () => {
             </FiltersView>
             <POsView>
               {selectedPOs.length > 0 && (
-                <>
+                <POButtonsView>
+                <RejectAllButton iconName="x" >Reject All</RejectAllButton>
                 <ApproveAllButton iconName="check-square" >Approve All</ApproveAllButton>
-                {/* <ApproveAllButton iconName="check-square" >Approve All</ApproveAllButton> */}
-                </>
+                </POButtonsView>
               )}     
               <SkeletonContent
                 containerStyle={{ flex: 1, width: '100%', borderRadius: 8 }}
