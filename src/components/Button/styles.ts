@@ -12,6 +12,10 @@ export const Container = styled(RectButton)`
     background: #77c16c;
     border-radius: 16px;
     margin-top: 8px;
+
+  button:disabled {
+    background: #dddddd!important;
+  }
 `;
 
 export const ButtonIcon = styled(Feather)`

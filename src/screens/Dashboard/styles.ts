@@ -2,6 +2,10 @@ import styled, { css } from 'styled-components/native';
 import Button from '../../components/Button';
 import { SearchBar as SearchBarField } from 'react-native-elements';
 
+import { Dimensions } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+const windowHeight = Dimensions.get('window').height;
+
 interface TypeCardProps {
   selected: boolean;
 }
@@ -42,6 +46,8 @@ export const HeaderTitle = styled.Text`
   font-family: 'Montserrat-Bold';
   font-size: 20px;
 `;
+
+export const HeaderAvatarButton = styled(RectButton)``;
 
 export const HeaderImage = styled.Image`
   width: 50px;
@@ -142,6 +148,11 @@ export const FiltersTypeCard = styled.Text<TypeCardProps>`
     css`
       background-color: #77c16c;;
   `}
+`;
+
+export const ApproveAllButton = styled(Button)`
+  margin: 0 0 11px 0;
+  border-radius: 8px;
 `;
 
 export const POsView = styled.View`

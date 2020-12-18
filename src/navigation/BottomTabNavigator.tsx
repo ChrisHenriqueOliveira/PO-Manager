@@ -8,6 +8,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 import Dashboard from '../screens/Dashboard';
+import POInfo from '../screens/POInfo';
+
 import UserProfile from '../screens/UserProfile';
 
 import { BottomTabParamList, MainParamList, UserProfileParamList } from './navigationTypes';
@@ -60,6 +62,24 @@ function MainNavigator() {
       <MainStack.Screen
         name="Dashboard"
         component={Dashboard}
+        options={
+          { 
+            headerShown: false,
+          }
+        }
+      />
+      <MainStack.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={
+          { 
+            headerShown: false,
+          }
+        }
+      />
+       <MainStack.Screen
+        name="POInfo"
+        component={POInfo}
         options={
           { 
             headerShown: false,

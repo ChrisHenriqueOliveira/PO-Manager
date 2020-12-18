@@ -6,9 +6,15 @@ export default {
     screens: {
       Root: {
         screens: {
-          Home: {
+          Main: {
             screens: {
-              Home: 'Home',
+              Dashboard: 'Dashboard',
+              POInfo: 'POInfo',
+            },
+          },
+          UserProfile: {
+            screens: {
+              UserProfile: 'UserProfile',
             },
           },           
         },

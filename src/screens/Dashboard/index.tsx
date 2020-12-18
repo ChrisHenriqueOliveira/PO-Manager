@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Alert, Text, FlatList } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
-
+import { useRoute, useNavigation } from '@react-navigation/native';
 import SkeletonContent from 'react-native-skeleton-content';
 
-import { Container, ScrollView, HeaderView, HeaderTitle, HeaderImage, WelcomeView, WelcomeTitle, 
+import { Container, ScrollView, HeaderView, HeaderTitle, HeaderAvatarButton, HeaderImage, WelcomeView, WelcomeTitle, 
   WelcomeSubtitle, BodyView, TitleView, TitleText, SubtitleText, SubtitleShowing, FiltersView, SearchBar, FiltersTypeView, 
-  FiltersTypeCard, POsView } from './styles';
+  FiltersTypeCard,POsView, ApproveAllButton } from './styles';
 
 import Button from '../../components/Button';
 import POCard from '../../components/POCard';
@@ -22,27 +21,45 @@ const typeFilters: string[] = [
 
 const POs = [
   {
-    status: 'Approved',
-    number: '111111',
-    supplier: 'Alguma Loja Ai',
+    status: 'Pending',
+    number: '123124',
+    supplier: 'ALGUMA LOJA AI',
     date: '12/12/12',
     price: 'R$1500,00'
   },{
     status: 'Pending',
-    number: '222222',
-    supplier: 'Alguma Loja Ai',
+    number: '235324',
+    supplier: 'ALGUMA LOJA AI',
+    date: '12/12/12',
+    price: 'R$1500,00'
+  },{
+    status: 'Pending',
+    number: '23425',
+    supplier: 'ALGUMA LOJA AI',
+    date: '12/12/12',
+    price: 'R$1500,00'
+  },{
+    status: 'Pending',
+    number: '52362',
+    supplier: 'ALGUMA LOJA AI',
+    date: '12/12/12',
+    price: 'R$1500,00'
+  },{
+    status: 'Approved',
+    number: '111111',
+    supplier: 'ALGUMA LOJA AI',
     date: '12/12/12',
     price: 'R$1500,00'
   },{
     status: 'Blocked',
     number: '333333',
-    supplier: 'Alguma Loja Ai',
+    supplier: 'ALGUMA LOJA AI',
     date: '12/12/12',
     price: 'R$1500,00'
   },{
     status: 'Rejected',
     number: '999999',
-    supplier: 'Alguma Loja Ai',
+    supplier: 'ALGUMA LOJA AI',
     date: '12/12/12',
     price: 'R$1500,00'
   },
@@ -50,11 +67,21 @@ const POs = [
 
 const Dashboard: React.FC = () => {
   const { user, signOut } = useAuth();
-  
-  const [searchFilter, setSearchFilter] = useState('');
-  const [typeFilter, setTypeFilter] = useState('All');
+  const route = useRoute();
+  const { goBack, navigate } = useNavigation();
 
-  const [isLoadingPOs, setIsLoadingPOs] = useState(false);
+  const [searchFilter, setSearchFilter] = useState<string>('');
+  const [typeFilter, setTypeFilter] = useState<string>('All');
+
+  const [isLoadingPOs, setIsLoadingPOs] = useState<boolean>(false);
+
+  const [selectedPOs, setSelectedPOs] = useState<string[]>([])
+
+  const[refresh, setRefresh] = useState<boolean>(false);
+
+  const userAvatarClick = useCallback(() => {
+    navigate('UserProfile');
+  },[])
 
   const handleSubtitleColor = useCallback(() => {
     let color = '';
@@ -86,6 +113,36 @@ const Dashboard: React.FC = () => {
     return color;
   },[typeFilter])
 
+  const handleSelectPO = useCallback((number: string) => {
+    let allSelectedPOs = selectedPOs;
+
+    if(!allSelectedPOs.includes(number)){
+      allSelectedPOs.push(number);
+    }else{
+      const index = allSelectedPOs.indexOf(number);
+      console.log(index);
+      allSelectedPOs.splice(index, 1)
+    }
+    
+    setSelectedPOs(allSelectedPOs);
+    setRefresh(!refresh);
+  
+    // navigate('POInfo', { itemId: '1' });
+
+  },[selectedPOs, refresh]);
+
+  const handleViewPO = useCallback((number: string) => {
+    navigate('POInfo', { documentNumber: number });
+  },[])
+
+  useEffect(() => {
+    setIsLoadingPOs(true);
+
+    setTimeout(() => {
+    setIsLoadingPOs(false);
+    }, 0)
+  }, [])
+
   useEffect(() => {
     setIsLoadingPOs(true);
 
@@ -99,7 +156,9 @@ const Dashboard: React.FC = () => {
         <ScrollView>
           <HeaderView>
             <HeaderTitle>Dashboard</HeaderTitle>
-            <HeaderImage source={userImage} />
+            <HeaderAvatarButton onPress={userAvatarClick}>
+              <HeaderImage source={userImage} />
+            </HeaderAvatarButton>
           </HeaderView>
           <WelcomeView>
             <WelcomeTitle>Hello, </WelcomeTitle>
@@ -132,27 +191,31 @@ const Dashboard: React.FC = () => {
               ))}
             </FiltersTypeView>
             </FiltersView>
-            <POsView>     
-            <SkeletonContent
-              containerStyle={{ flex: 1, width: '100%', borderRadius: 8 }}
-              isLoading={isLoadingPOs}
-              layout={[
-                { key: '1', width: '100%', height: 128, marginBottom: 8 },
-                { key: '2', width: '100%', height: 128, marginBottom: 8 },
-                { key: '3', width: '100%', height: 128, marginBottom: 8 }
-              ]}
-            >
-              <FlatList
-              data={POs}
-              renderItem={({ item }) => (
-                <POCard item={item} />
-              )}
-              keyExtractor={item => item.id}
-              />
-              {/* {POs.map((item) => (
-                <POCard item={item} />
-              ))} */}
-            </SkeletonContent>     
+            <POsView>
+              {selectedPOs.length > 0 && (
+                <>
+                <ApproveAllButton iconName="check-square" >Approve All</ApproveAllButton>
+                {/* <ApproveAllButton iconName="check-square" >Approve All</ApproveAllButton> */}
+                </>
+              )}     
+              <SkeletonContent
+                containerStyle={{ flex: 1, width: '100%', borderRadius: 8 }}
+                isLoading={isLoadingPOs}
+                layout={[
+                  { key: '1', width: '100%', height: 128, marginBottom: 8 },
+                  { key: '2', width: '100%', height: 128, marginBottom: 8 },
+                  { key: '3', width: '100%', height: 128, marginBottom: 8 }
+                ]}
+              >
+                <FlatList
+                data={POs}
+                extraData={refresh}
+                renderItem={({ item }) => (
+                  <POCard selected={selectedPOs.includes(item.number)} item={item} onCardSelect={handleSelectPO} onViewClick={handleViewPO} />
+                )}
+                keyExtractor={item => item.number}
+                />
+              </SkeletonContent>     
             </POsView>
           </BodyView>
         </ScrollView>

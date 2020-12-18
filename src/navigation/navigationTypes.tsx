@@ -11,6 +11,8 @@ export type BottomTabParamList = {
 
 export type MainParamList = {
   Dashboard: undefined;
+  UserProfile: undefined;
+  POInfo: undefined;
 };
 
 export type UserProfileParamList = {
