@@ -126,9 +126,6 @@ const Dashboard: React.FC = () => {
     
     setSelectedPOs(allSelectedPOs);
     setRefresh(!refresh);
-  
-    // navigate('POInfo', { itemId: '1' });
-
   },[selectedPOs, refresh]);
 
   const handleViewPO = useCallback((number: string) => {

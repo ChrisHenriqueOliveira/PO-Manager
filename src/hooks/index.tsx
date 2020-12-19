@@ -1,9 +1,14 @@
 import React from 'react';
 
 import { AuthProvider } from './auth';
+import { POProvider } from './poController';
 
 const AppProvider: React.FC = ({ children }) => (
-    <AuthProvider>{children}</AuthProvider>
+    <POProvider>
+        <AuthProvider>
+            {children}
+        </AuthProvider>
+    </POProvider>
 );
 
 export default AppProvider;
